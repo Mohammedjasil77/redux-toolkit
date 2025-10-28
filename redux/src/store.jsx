@@ -7,23 +7,36 @@
 //     }
 // })
 
-import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from './counterSlice'
+// import { configureStore } from "@reduxjs/toolkit";
+// import counterReducer from './counterSlice'
 
-// Custom Middleware
-const loggerMiddleware = (store) => (next) => (action) => {
-  console.log("DISPATCHED ACTION:", action);
-  let result = next(action);
-  console.log("UPDATED STATE:", store.getState());
-  return result;
-};
+// // Custom Middleware
+// const loggerMiddleware = (store) => (next) => (action) => {
+//   console.log("DISPATCHED ACTION:", action);
+//   let result = next(action);
+//   console.log("UPDATED STATE:", store.getState());
+//   return result;
+// };
+
+// const store = configureStore({
+//   reducer: {
+//     counter: counterReducer
+//   },
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware().concat(loggerMiddleware)
+// });
+
+// export default store;
+
+
+import { configureStore } from "@reduxjs/toolkit";
+import { thunk } from "redux-thunk";
+import userReducer from "./assets/userslice";
 
 const store = configureStore({
-  reducer: {
-    counter: counterReducer
-  },
+  reducer: { user: userReducer },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(loggerMiddleware)
+    getDefaultMiddleware().concat(thunk) 
 });
 
 export default store;

@@ -41,22 +41,46 @@
 // export default App
 
 
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement, addBy } from "./counterSlice";
+// import React from "react";
+// import { useSelector, useDispatch } from "react-redux";
+// import { increment, decrement, addBy } from "./counterSlice";
+
+// function App() {
+//   const count = useSelector((state) => state.counter.value);
+//   const dispatch = useDispatch();
+
+//   return (
+//     <>
+//       <h1>Count: {count}</h1>
+//       <button onClick={() => dispatch(increment())}>Increment</button>
+//       <button onClick={() => dispatch(decrement())}>Decrement</button>
+//       <button onClick={() => dispatch(addBy(5))}>Add 5</button>
+//     </>
+//   );
+// }
+
+// export default App;
+
+
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserData } from "./assets/userslice";
 
 function App() {
-  const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.user);
+
+  useEffect(() => { dispatch(fetchUserData()); }, []);
 
   return (
     <>
-      <h1>Count: {count}</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
-      <button onClick={() => dispatch(addBy(5))}>Add 5</button>
+      <h1>Redux Thunk Example</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {data && <p>User Name: {data.name}</p>}
     </>
   );
 }
 
 export default App;
+
